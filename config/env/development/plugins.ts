@@ -5,12 +5,11 @@ export default ({ env }) => ({
       providerOptions: {
         accessKeyId: env("R2_ACCESS_KEY_ID"),
         secretAccessKey: env("R2_ACCESS_SECRET"),
-        region: env("R2_REGION"),
+        endpoint: env("R2_ENDPOINT"),
         params: {
           Bucket: env("R2_BUCKET"),
-          accountId: env("R2_ACCOUNT_ID"),
-          publicUrl: env("R2_PUBLIC_URL"),
         },
+        cloudflarePublicAccessUrl: env("R2_PUBLIC_URL"),
       },
       actionOptions: {
         upload: {},
