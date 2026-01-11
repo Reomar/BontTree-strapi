@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_settings_opening_hours",
+  "info": {
+    "displayName": "Opening Hours",
+    "icon": "cog"
+  },
+  "options": {},
+  "attributes": {
+    "day": {
+      "type": "string",
+      "required": true
+    },
+    "open": {
+      "type": "string",
+      "required": true
+    },
+    "close": {
+      "type": "string",
+      "required": true
+    },
+    "isClosed": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
