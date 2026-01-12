@@ -92,19 +92,9 @@
       ],
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       }
-    },
-    "sizes": {
-      "type": "component",
-      "repeatable": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "component": "menu.size"
     },
     "availableTemperatures": {
       "pluginOptions": {

@@ -1,24 +1,5 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface MenuSize extends Struct.ComponentSchema {
-  collectionName: 'components_menu_sizes';
-  info: {
-    displayName: 'Size';
-    icon: 'apps';
-  };
-  attributes: {
-    label: Schema.Attribute.String & Schema.Attribute.Required;
-    price: Schema.Attribute.Decimal &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      >;
-  };
-}
-
 export interface SettingsOpeningHours extends Struct.ComponentSchema {
   collectionName: 'components_settings_opening_hours';
   info: {
@@ -98,7 +79,6 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'menu.size': MenuSize;
       'settings.opening-hours': SettingsOpeningHours;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
