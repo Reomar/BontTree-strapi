@@ -750,6 +750,13 @@ export interface ApiMenuItemMenuItem extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    price: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     shortDescription: Schema.Attribute.String &
       Schema.Attribute.Required &

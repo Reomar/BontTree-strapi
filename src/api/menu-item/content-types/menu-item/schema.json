@@ -153,6 +153,15 @@
       "relation": "manyToMany",
       "target": "api::add-on.add-on",
       "inversedBy": "menuItems"
+    },
+    "price": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "decimal",
+      "required": true
     }
   }
 }
