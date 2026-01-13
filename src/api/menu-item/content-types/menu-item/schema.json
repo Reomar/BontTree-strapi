@@ -104,8 +104,9 @@
       },
       "type": "enumeration",
       "enum": [
-        "hot",
-        "iced"
+        "Hot",
+        "Cold",
+        "Hot & Cold"
       ]
     },
     "allergenInfo": {

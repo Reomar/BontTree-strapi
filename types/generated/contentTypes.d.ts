@@ -661,7 +661,9 @@ export interface ApiMenuItemMenuItem extends Struct.CollectionTypeSchema {
           localized: false;
         };
       }>;
-    availableTemperatures: Schema.Attribute.Enumeration<['hot', 'iced']> &
+    availableTemperatures: Schema.Attribute.Enumeration<
+      ['Hot', 'Cold', 'Hot & Cold']
+    > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

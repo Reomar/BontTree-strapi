@@ -9,8 +9,8 @@ This is a Strapi-based CMS for a cafe/restaurant menu management system. The sys
 ### Content Types
 
 The system consists of:
-- **4 Collection Types**: Tag, Category, Menu Item, Add-On, Promotion
-- **3 Single Types**: Global Setting, Global, About
+- **5 Collection Types**: Tag, Category, Menu Item, Add-On, Promotion
+- **2 Single Types**: Global Setting, About
 
 ### Key Features
 
@@ -118,10 +118,9 @@ The system consists of:
 | | | | Options: "active", "hidden", "sold_out", "scheduled" | **Not localized** |
 | `isFeatured` | Boolean | ❌ No | Default: false | Featured item flag **Not localized** |
 | `tags` | Relation | ❌ No | Many-to-Many | Related tags (inverse of Tag.menuItems) |
-| `image` | Media | ✅ Yes | Single, images only | Item image (localized) |
-| `sizes` | Component | ❌ No | Repeatable | Size options (see Size Component) (localized) |
+| `image` | Media | ✅ Yes | Single, images only | Item image **Not localized** |
 | `availableTemperatures` | Enumeration | ❌ No | - | Available temperature options (localized) |
-| | | | Options: "hot", "iced" | |
+| | | | Options: "Hot", "Cold", "Hot & Cold" | |
 | `allergenInfo` | Text | ❌ No | - | Allergen information (localized) |
 | `availableFrom` | Date | ❌ No | - | Start date for availability **Not localized** |
 | `availableUntil` | Date | ❌ No | - | End date for availability (localized) |
@@ -138,10 +137,6 @@ The system consists of:
 - **Many-to-One** with `Category` (via `category` field)
 - **Many-to-Many** with `AddOn` (via `addOns` field)
 - **One-to-Many** with `Promotion` (via Promotion.items)
-
-#### Components Used
-
-- `menu.size` (repeatable) - For size/price options
 
 #### API Endpoints
 
@@ -281,38 +276,7 @@ The system consists of:
 
 ---
 
-### 7. Global
-
-**Type**: Single Type  
-**Collection Name**: `globals`  
-**Draft & Publish**: ❌ Disabled  
-**i18n**: ❌ Disabled
-
-#### Attributes
-
-| Field | Type | Required | Constraints | Description |
-|-------|------|----------|-------------|-------------|
-| `id` | Integer | Auto | - | Primary key (auto-generated) |
-| `siteName` | String | ✅ Yes | - | Site name |
-| `favicon` | Media | ❌ No | Single, images/files/videos | Site favicon |
-| `siteDescription` | Text | ✅ Yes | - | Site description |
-| `defaultSeo` | Component | ❌ No | Single | SEO metadata (see SEO Component) |
-| `createdAt` | DateTime | Auto | - | Creation timestamp |
-| `updatedAt` | DateTime | Auto | - | Last update timestamp |
-
-#### Components Used
-
-- `shared.seo` (single) - For SEO metadata
-
-#### API Endpoints
-
-- `GET /api/global` - Get global settings
-- `PUT /api/global` - Update global settings
-- `POST /api/global` - Create/update global settings
-
----
-
-### 8. About
+### 7. About
 
 **Type**: Single Type  
 **Collection Name**: `abouts`  
@@ -347,26 +311,7 @@ The system consists of:
 
 ## Components
 
-### 1. Size Component
-
-**Component Path**: `menu.size`  
-**Collection Name**: `components_menu_sizes`
-
-#### Attributes
-
-| Field | Type | Required | Constraints | Description |
-|-------|------|----------|-------------|-------------|
-| `id` | Integer | Auto | - | Component instance ID |
-| `label` | String | ✅ Yes | - | Size label (e.g., "Small", "Medium", "Large") |
-| `price` | Decimal | ✅ Yes | Min: 0 | Price for this size |
-
-#### Usage
-
-Used in `MenuItem.sizes` as a repeatable component to define different size options with prices.
-
----
-
-### 2. Opening Hours Component
+### 1. Opening Hours Component
 
 **Component Path**: `settings.opening-hours`  
 **Collection Name**: `components_settings_opening_hours`
@@ -387,7 +332,7 @@ Used in `GlobalSetting.openingHours` as a repeatable component to define weekly 
 
 ---
 
-### 3. SEO Component
+### 2. SEO Component
 
 **Component Path**: `shared.seo`  
 **Collection Name**: `components_shared_seos`
@@ -403,11 +348,11 @@ Used in `GlobalSetting.openingHours` as a repeatable component to define weekly 
 
 #### Usage
 
-Used in `Global.defaultSeo` as a single component for site-wide SEO settings.
+This component can be used in any content type that requires SEO metadata.
 
 ---
 
-### 4. Media Component
+### 3. Media Component
 
 **Component Path**: `shared.media`  
 **Collection Name**: `components_shared_media`
@@ -425,7 +370,7 @@ Used in `About.blocks` dynamic zone as a media block.
 
 ---
 
-### 5. Quote Component
+### 4. Quote Component
 
 **Component Path**: `shared.quote`  
 **Collection Name**: `components_shared_quotes`
@@ -444,7 +389,7 @@ Used in `About.blocks` dynamic zone as a quote block.
 
 ---
 
-### 6. Rich Text Component
+### 5. Rich Text Component
 
 **Component Path**: `shared.rich-text`  
 **Collection Name**: `components_shared_rich_texts`
@@ -462,7 +407,7 @@ Used in `About.blocks` dynamic zone as a rich text block.
 
 ---
 
-### 7. Slider Component
+### 6. Slider Component
 
 **Component Path**: `shared.slider`  
 **Collection Name**: `components_shared_sliders`
@@ -535,6 +480,7 @@ These fields are shared across all locales:
 - `MenuItem.itemStatus`
 - `MenuItem.isFeatured`
 - `MenuItem.availableFrom`
+- `MenuItem.image`
 - `GlobalSetting.logo`
 - `GlobalSetting.primaryColor`
 - `GlobalSetting.secondaryColor`
@@ -556,7 +502,6 @@ These fields are shared across all locales:
 ### Content Types without Draft/Publish
 
 - ❌ Category
-- ❌ Global
 - ❌ About
 
 ### API Behavior
@@ -839,7 +784,6 @@ GET    /api/add-ons/:id             # Get single add-on
 GET    /api/promotions              # List all active promotions
 GET    /api/promotions/:id          # Get single promotion
 GET    /api/global-setting          # Get global settings
-GET    /api/global                  # Get global SEO settings
 GET    /api/about                   # Get about page
 ```
 
@@ -874,9 +818,7 @@ GET    /api/categories/visible      # Get visible categories only
 - Add-On: `name`, `priceAdjustment`, `isActive`
 - Promotion: `title`, `isActive`
 - Global Setting: `cafeName`, `defaultCurrency`, `currencySymbol`
-- Global: `siteName`, `siteDescription`
 - SEO Component: `metaTitle`, `metaDescription`
-- Size Component: `label`, `price`
 - Opening Hours Component: `day`, `open`, `close`
 
 ### Constraints
@@ -887,7 +829,7 @@ GET    /api/categories/visible      # Get visible categories only
 - `price`: Min 0 (for Size component)
 - `color`: Must be one of: "orange", "blue", "green", "yellow", "purple", "gray", "indigo"
 - `itemStatus`: Must be one of: "active", "hidden", "sold_out", "scheduled"
-- `availableTemperatures`: Must be one of: "hot", "iced"
+- `availableTemperatures`: Must be one of: "Hot", "Cold", "Hot & Cold"
 - `type` (Add-On): Must be one of: "milk", "syrup", "extra_shot", "topping", "other"
 
 ---
@@ -902,7 +844,7 @@ GET    /api/categories/visible      # Get visible categories only
 6. **Handle date ranges** - for promotions and availability windows
 7. **Sort categories** by `sortOrder` for proper display order
 8. **Filter visible categories** using `isVisible` flag
-9. **Handle component arrays** - sizes, opening hours are arrays
+9. **Handle component arrays** - opening hours are arrays
 10. **Support dynamic zones** - About page blocks can be any of 4 component types
 
 ---
@@ -933,19 +875,7 @@ GET    /api/categories/visible      # Get visible categories only
           }
         }
       },
-      "sizes": [
-        {
-          "id": 1,
-          "label": "Single",
-          "price": 25.00
-        },
-        {
-          "id": 2,
-          "label": "Double",
-          "price": 35.00
-        }
-      ],
-      "availableTemperatures": ["hot"],
+      "availableTemperatures": ["Hot"],
       "allergenInfo": "Contains caffeine",
       "category": {
         "data": {
@@ -1040,8 +970,8 @@ GET    /api/categories/visible      # Get visible categories only
 
 This Strapi CMS manages a cafe/restaurant menu system with:
 
-- **8 Content Types**: 5 collection types (Tag, Category, Menu Item, Add-On, Promotion) and 3 single types (Global Setting, Global, About)
-- **7 Reusable Components**: Size, Opening Hours, SEO, Media, Quote, Rich Text, Slider
+- **7 Content Types**: 5 collection types (Tag, Category, Menu Item, Add-On, Promotion) and 2 single types (Global Setting, About)
+- **6 Reusable Components**: Opening Hours, SEO, Media, Quote, Rich Text, Slider
 - **Complex Relationships**: Many-to-many (Menu Items ↔ Tags, Menu Items ↔ Add-Ons), One-to-many (Category → Menu Items, Promotion → Menu Items)
 - **Multi-language Support**: Most content types support i18n
 - **Draft/Publish Workflow**: Most collection types support content staging
