@@ -4,7 +4,8 @@
   "info": {
     "singularName": "promotion",
     "pluralName": "promotions",
-    "displayName": "Promotion"
+    "displayName": "Promotion",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -68,11 +69,12 @@
       "required": true
     },
     "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
       ],
-      "type": "media",
-      "multiple": false,
       "pluginOptions": {
         "i18n": {
           "localized": false
@@ -83,6 +85,14 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::menu-item.menu-item"
+    },
+    "price": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "decimal"
     }
   }
 }

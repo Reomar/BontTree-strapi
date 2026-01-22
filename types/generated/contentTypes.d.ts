@@ -729,7 +729,6 @@ export interface ApiMenuItemMenuItem extends Struct.CollectionTypeSchema {
       }>;
     publishedAt: Schema.Attribute.DateTime;
     shortDescription: Schema.Attribute.String &
-      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -755,6 +754,7 @@ export interface ApiMenuItemMenuItem extends Struct.CollectionTypeSchema {
 export interface ApiPromotionPromotion extends Struct.CollectionTypeSchema {
   collectionName: 'promotions';
   info: {
+    description: '';
     displayName: 'Promotion';
     pluralName: 'promotions';
     singularName: 'promotion';
@@ -803,6 +803,12 @@ export interface ApiPromotionPromotion extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::promotion.promotion'
     >;
+    price: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     startDate: Schema.Attribute.Date &
       Schema.Attribute.SetPluginOptions<{
