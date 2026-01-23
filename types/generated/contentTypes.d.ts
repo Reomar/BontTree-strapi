@@ -662,11 +662,11 @@ export interface ApiMenuItemMenuItem extends Struct.CollectionTypeSchema {
         };
       }>;
     availableTemperatures: Schema.Attribute.Enumeration<
-      ['Hot', 'Cold', 'Hot & Cold']
+      ['Hot', 'Cold', 'Hot & Cold', 'None']
     > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
-          localized: true;
+          localized: false;
         };
       }>;
     availableUntil: Schema.Attribute.Date &

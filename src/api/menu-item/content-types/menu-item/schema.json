@@ -99,14 +99,15 @@
     "availableTemperatures": {
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       },
       "type": "enumeration",
       "enum": [
         "Hot",
         "Cold",
-        "Hot & Cold"
+        "Hot & Cold",
+        "None"
       ]
     },
     "allergenInfo": {
